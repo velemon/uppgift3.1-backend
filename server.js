@@ -10,7 +10,7 @@ require("dotenv").config();
 const app = express();
 
 // Middleware för att hantera CORS och JSON-kroppar i inkommande requests
-app.use(cors());
+app.use(cors()); 
 app.use(express.json());
 
 // Importerar och använder routes för "work" API:et
