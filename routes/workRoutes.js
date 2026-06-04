@@ -7,9 +7,16 @@ const Work = require("../models/Work");
 
 // CREATE - Skapar en ny "work" post i databasen med data från request body
 router.post("/", async (req, res) => {
-    // Använder Mongoose-metoden create för att skapa en ny post och returnerar den skapade posten som JSON
-  const data = await Work.create(req.body);
-  res.json(data);
+  try {
+    // Använder Mongoose-metoden create för att skapa en ny post i databasen baserat på data som skickas i request body, och returnerar den skapade posten som JSON med statuskod 201 (Created)
+    const data = await Work.create(req.body);
+    res.status(201).json(data);
+    // Om det uppstår ett fel, t.ex. om något fält saknas eller är av fel typ, kommer det att kastas ett valideringsfel som fångas i catch-blocket
+  } catch (error) {
+    res.status(400).json({
+      message: "Alla fält måste fyllas i"
+    });
+  }
 });
 
 // READ ALL - Hämtar alla "work" poster från databasen
